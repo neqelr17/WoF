@@ -133,7 +133,7 @@ inlinevar-rgx=[A-Za-z_][A-Za-z0-9_]*$
 inlinevar-name-hint=[A-Za-z_][A-Za-z0-9_]*$
 
 # Regular expression matching correct attribute names
-attr-rgx=[a-z_][a-z0-9_]{2,30}$
+attr-rgx=[a-z_][a-z0-9_]{1,30}$
 
 # Naming hint for attribute names
 attr-name-hint=[a-z_][a-z0-9_]{2,30}$

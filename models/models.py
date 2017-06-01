@@ -6,13 +6,13 @@ Contains SQLAlchemy models. These can be used in python as objects or to create
 the database with all of its constraints.
 """
 
-import datetime
+# STD Library imports
 
 
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy import Column, ForeignKey, Sequence, UniqueConstraint
-from sqlalchemy.types import Boolean, DateTime, Integer, SmallInteger, String
+from sqlalchemy.types import DateTime, DECIMAL, Integer, String
 
 
 __author__ = 'Brett R. Ward'
@@ -87,12 +87,13 @@ class FIFOItem(BASE):
 
     def __str__(self):
         """Print User when cast as a string."""
-        return 'FIFOItem(id={}, item={}, price={}, quantity={}, date={})'.format(
-            self.id,
-            self.item.name,
-            self.wholesale_price,
-            self.quantity,
-            self.acqusition_date)
+        return ('FIFOItem(id={}, item={}, price={},'
+                ' quantity={}, date={})').format(
+                    self.id,
+                    self.item.name,
+                    self.wholesale_price,
+                    self.quantity,
+                    self.acqusition_date)
 
     def __repr__(self):
         """Print User when called in python repl."""
@@ -117,7 +118,7 @@ class Category(BASE):
 
     def __str__(self):
         """Print User when cast as a string."""
-        return 'FIFOItem(id={}, name={})'.format(
+        return 'Category(id={}, name={})'.format(
             self.id,
             self.name)
 
@@ -149,10 +150,75 @@ class ItemCategory(BASE):
 
     def __str__(self):
         """Print User when cast as a string."""
-        return 'FIFOItem(id={}, item_id={}, cat_id={})'.format(
+        return 'ItemCategory(id={}, item_id={}, cat_id={})'.format(
             self.id,
             self.item_id,
             self.cat_id)
+
+    def __repr__(self):
+        """Print User when called in python repl."""
+        return '<{}>'.format(self.__str__())
+
+
+class Transaction(BASE):
+    """Links an item to a category."""
+
+    __tablename__ = 'transactions'
+
+    # Columns
+    id = Column(Integer, Sequence('item_cat_id'), primary_key=True)
+    code = Column(String(10), nullable=False)
+    time = Column(DateTime, nullable=False)
+    payment_method = Column(String(10), nullable=False)
+    tax_rate = Column(DECIMAL)
+    subtotal = Column(Integer)
+    tax_amount = Column(Integer)
+    total = Column(Integer)
+
+    # Relationships
+    # items via backref
+
+    def __init__(self, *args, **kwargs):
+        """Init magic method."""
+        super().__init__(*args, **kwargs)
+
+    def __str__(self):
+        """Print User when cast as a string."""
+        return 'Transaction(id={}, tran_code={}, tran_time={})'.format(
+            self.id,
+            self.code,
+            self.time)
+
+    def __repr__(self):
+        """Print User when called in python repl."""
+        return '<{}>'.format(self.__str__())
+
+
+class TransactionItem(BASE):
+    """Links an item to a category."""
+
+    __tablename__ = 'transaction_items'
+
+    # Columns
+    id = Column(Integer, Sequence('item_cat_id'), primary_key=True)
+    item_id = Column(Integer, ForeignKey('items.id'), nullable=False)
+    tran_id = Column(Integer, ForeignKey('transactions.id'), nullable=False)
+
+    # Relationships
+    item = relationship('Item', foreign_keys=item_id, backref='tran_items')
+    transactions = relationship(
+        'Transaction', foreign_keys=tran_id, backref='tran_items')
+
+    def __init__(self, *args, **kwargs):
+        """Init magic method."""
+        super().__init__(*args, **kwargs)
+
+    def __str__(self):
+        """Print User when cast as a string."""
+        return 'FIFOItem(id={}, tran_code={}, tran_time={})'.format(
+            self.id,
+            self.code,
+            self.time)
 
     def __repr__(self):
         """Print User when called in python repl."""
