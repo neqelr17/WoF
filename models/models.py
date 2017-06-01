@@ -142,7 +142,7 @@ class ItemCategory(BASE):
     category = relationship('Category', foreign_keys=cat_id, backref='items')
 
     # Constraints
-    __table_args__ = (UniqueConstraint('item_id', 'cat_id', name='cat_unique'))
+    __table_args__ = (UniqueConstraint('item_id', 'cat_id', name='cat_unique'),)
 
     def __init__(self, *args, **kwargs):
         """Init magic method."""
