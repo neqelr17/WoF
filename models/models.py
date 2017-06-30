@@ -62,6 +62,10 @@ class Item(BASE):
         """Print User when called in python repl."""
         return '<{}>'.format(self.__str__())
 
+    def set_retail_price(self, amount):
+        """Set dollar amout to cents."""
+        self.retail_price = amount * 100
+
 
 class FIFOItem(BASE):
     """Item meta that contains cost of quantities purchased.
@@ -99,6 +103,17 @@ class FIFOItem(BASE):
         """Print User when called in python repl."""
         return '<{}>'.format(self.__str__())
 
+    def set_quantity(self, quantity):
+        """Set quantity."""
+        if quantity is None:
+            self.quantity = 0
+        else:
+            self.quantity = quantity
+
+    def set_wholesale_price(self, amount):
+        """Set dollar amout to cents."""
+        self.wholesale_price = amount * 100
+
 
 class Category(BASE):
     """Links an item to a category."""
@@ -107,7 +122,7 @@ class Category(BASE):
 
     # Columns
     id = Column(Integer, Sequence('item_cat_id'), primary_key=True)
-    name = Column(String(50), nullable=False)
+    name = Column(String(50), unique=True, nullable=False)
 
     # Relationships
     # items via backref
