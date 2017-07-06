@@ -30,23 +30,24 @@ class Header(Enum):
     wholesale_price = 3
     retail_price = 4
     quantity = 5
-    barcode = 6
+    upc = 6
 
 
 def main():
     """Main program."""
     with session_scope() as session:
-        workbook = openpyxl.load_workbook('WoF_inventory.xlsx')
+        workbook = openpyxl.load_workbook('WoF_Inventory_List_Fin.xlsx')
         print(workbook.get_sheet_names())
         for manufacturer in workbook.get_sheet_names():
             sheet = workbook.get_sheet_by_name(manufacturer)
             for row in sheet.iter_rows():
                 if row[Header.sku.value].value != 'SKU':
-                    item = get_create_item(session, row, manufacturer)
-                    category = get_create_category(
-                        session, row[Header.category.value].value)
-                    set_item_category(session, item, category)
-                    create_fifo_item(session, item, row)
+                    if row[Header.sku.value].value is not None:
+                        item = get_create_item(session, row, manufacturer)
+                        category = get_create_category(
+                            session, row[Header.category.value].value)
+                        set_item_category(session, item, category)
+                        create_fifo_item(session, item, row)
 
 
 def create_fifo_item(session, item, row):
@@ -71,11 +72,14 @@ def get_create_item(session, row, manufacturer):
     item = session.query(Item).filter_by(
         sku=row[Header.sku.value].value).first()
     if item is None:
-        item = Item(sku=row[Header.sku.value].value,
-                    name=row[Header.name.value].value,
-                    manufacturer=manufacturer)
-        item.set_retail_price(row[Header.retail_price.value].value)
-        session.add(item)
+        if row[Header.sku.value].value is not None:
+            item = Item(sku=row[Header.sku.value].value,
+                        name=row[Header.name.value].value,
+                        upc=row[Header.upc.value].value,
+                        manufacturer=manufacturer)
+            item.set_retail_price(row[Header.retail_price.value].value)
+            print(item)
+            session.add(item)
     return item
 
 
