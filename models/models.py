@@ -66,6 +66,10 @@ class Item(BASE):
         """Set dollar amout to cents."""
         self.retail_price = amount * 100
 
+    def get_retail_price(self):
+        """Get dollar amout from cents."""
+        return self.retail_price / 100
+
 
 class FIFOItem(BASE):
     """Item meta that contains cost of quantities purchased.
@@ -182,13 +186,13 @@ class Transaction(BASE):
 
     # Columns
     id = Column(Integer, Sequence('item_cat_id'), primary_key=True)
-    code = Column(String(10), nullable=False)
+    code = Column(String(10), nullable=True)
     time = Column(DateTime, nullable=False)
     payment_method = Column(String(10), nullable=False)
     tax_rate = Column(DECIMAL)
-    subtotal = Column(Integer)
-    tax_amount = Column(Integer)
-    total = Column(Integer)
+    subtotal = Column(DECIMAL)
+    tax_amount = Column(DECIMAL)
+    total = Column(DECIMAL)
 
     # Relationships
     # items via backref
@@ -230,10 +234,10 @@ class TransactionItem(BASE):
 
     def __str__(self):
         """Print User when cast as a string."""
-        return 'FIFOItem(id={}, tran_code={}, tran_time={})'.format(
+        return 'TransactionItem(id={}, item_id={}, tran_id={})'.format(
             self.id,
-            self.code,
-            self.time)
+            self.item_id,
+            self.tran_id)
 
     def __repr__(self):
         """Print User when called in python repl."""
