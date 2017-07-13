@@ -10,7 +10,7 @@ from datetime import datetime
 
 
 from sqlite_engine import session_scope
-from models import Item, FIFOItem, Transaction, TransactionItem
+from models import Item, FIFOItem, Category, ItemCategory
 
 
 __author__ = 'Brett R. Ward'
@@ -21,17 +21,13 @@ __author__ = 'Brett R. Ward'
 def main():
     """Main program."""
     with session_scope() as session:
-        item = session.query(Item).filter_by(sku='LB001').one()
-        qty = 0
-        print(item)
-        for fifo_item in item.fifo_items:
-            qty += fifo_item.quantity
-            print(fifo_item)
-        for tran_item in item.tran_items:
-            print(tran_item)
-        qty -= len(item.tran_items)
-        
-        print('qty: {}'.format(qty))
+        items = session.query(Item).filter_by(manufacturer='Video Games')
+        for item in items:
+            qty = 0
+            for fifo in item.fifo_items:
+                qty += fifo.quantity
+            for x in range(0, qty):
+                print('{},{},{}'.format(item.sku, item.name, item.get_retail_price()))
 
 
 if __name__ == "__main__":
