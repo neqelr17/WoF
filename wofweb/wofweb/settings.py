@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'wofweb',
     'home',
     'inventory',
 ]
@@ -118,5 +119,12 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
-
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# import local settings
+try:
+    from powerweb.local_settings import *
+    addLocalApps(INSTALLED_APPS)
+except ImportError:
+    pass

@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE HTML>
+<!--
+
+-->
+<html>
+    <head>
+        <title>
+            {% block title %}
+            {% endblock %}
+        </title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {% block styles %}
+        {% endblock %}
+    </head>
+    <body>
+        {% csrf_token %}
+        {% verbatim %}
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
+        {% endverbatim %}
+
+        {% block main %}
+        {% endblock %}
+
+        {% block side %}
+        {% endblock %}
+    </body>
+</html>
