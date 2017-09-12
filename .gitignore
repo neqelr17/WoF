@@ -4,7 +4,7 @@ __pycache__/
 *$py.class
 
 # C extensions
-*.so
+*.so~
 
 # Distribution / packaging
 .Python
@@ -99,3 +99,7 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# SQLite3 database files
+*.sqlite3
+.db

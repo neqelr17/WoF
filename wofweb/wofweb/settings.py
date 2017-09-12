@@ -23,10 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'u7s1%(z%=_ny-71h(df=-7$0jmo6pq$fcv_e(2f5utxs!)3^ap'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -124,7 +123,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # import local settings
 try:
-    from powerweb.local_settings import *
-    addLocalApps(INSTALLED_APPS)
+    from wofweb.local_settings import *
+    # addLocalApps(INSTALLED_APPS)
 except ImportError:
     pass
