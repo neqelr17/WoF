@@ -8,7 +8,7 @@ class Item(models.Model):
     sku = models.CharField(max_length=8, unique=True)
     upc = models.IntegerField(unique=True)
     name = models.CharField(max_length=50)
-    retail_price = models.DecimalField(decimal_places=2)
+    retail_price = models.DecimalField(decimal_places=2, max_digits=6)
     manufacturer = models.CharField(max_length=50)
 
     class Meta():
@@ -22,7 +22,7 @@ class WholesaleItem(models.Model):
     """A WholesaleItem describes the cost group and counts of an item."""
 
     item = models.ForeignKey(Item, related_name='wholesale')
-    price = models.IntegerField()
+    price = models.DecimalField(decimal_places=2, max_digits=6)
     quantity = models.IntegerField()
     acqusition_date = models.DateTimeField()
 
@@ -55,7 +55,7 @@ class ItemCategory(models.Model):
         managed = True
         db_table = 'item_categories'
         app_label = 'inventory'
-        ordering = ['name']
+        ordering = ['id']
         unique_together = (('item', 'category'))
 
 
@@ -65,26 +65,26 @@ class Transaction(models.Model):
     tran_id = models.CharField(max_length=10)
     time = models.DateTimeField()
     payment_method = models.CharField(max_length=10)
-    tax_rate = models.DecimalField(decimal_places=2)
-    subtotal = models.DecimalField(decimal_places=2)
-    tax_amount = models.DecimalField(decimal_places=2)
-    total = models.DecimalField(decimal_places=2)
+    tax_rate = models.DecimalField(decimal_places=2, max_digits=6)
+    subtotal = models.DecimalField(decimal_places=2, max_digits=6)
+    tax_amount = models.DecimalField(decimal_places=2, max_digits=6)
+    total = models.DecimalField(decimal_places=2, max_digits=6)
 
     class Meta():
         managed = True
         db_table = 'transactions'
         app_label = 'inventory'
-        ordering = ['name']
+        ordering = ['-time']
 
 
 class TransactionItem(models.Model):
     """Items sold in an transaction."""
 
     item = models.ForeignKey(Item, related_name='transaction_items')
-    transaction = models.ForeignKey(Item, related_name='transaction_items')
+    transaction = models.ForeignKey(Transaction, related_name='transaction_items')
 
     class Meta():
         managed = True
         db_table = 'item_tansactions'
         app_label = 'inventory'
-        ordering = ['name']
+        # ordering = ['name']
