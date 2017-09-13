@@ -10,6 +10,7 @@ class Item(models.Model):
     name = models.CharField(max_length=50)
     retail_price = models.DecimalField(decimal_places=2, max_digits=6)
     manufacturer = models.CharField(max_length=50)
+    quantity = models.IntegerField(default=0)
 
     class Meta():
         managed = True
