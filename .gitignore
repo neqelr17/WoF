@@ -103,3 +103,7 @@ ENV/
 # SQLite3 database files
 *.sqlite3
 .db
+
+# Visual Studios
+.vs
+obj/
