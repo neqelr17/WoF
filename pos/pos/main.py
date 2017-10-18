@@ -1,3 +1,6 @@
+import sys
+
+
 from kivy.app import App
 from kivy.properties import StringProperty
 from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
@@ -6,8 +9,8 @@ import os
 
 import models
 from mysql_engine import session_scope
+from menu import Menu
 from pos import Pos
-
 
 
 class Login(Screen):
@@ -18,7 +21,7 @@ class Login(Screen):
         app.password = passwordText
 
         self.manager.transition = SlideTransition(direction="left")
-        self.manager.current = 'pos'
+        self.manager.current = 'menu'
 
         app.config.read(app.get_application_config())
         app.config.write()
@@ -31,6 +34,9 @@ class Login(Screen):
         self.ids['login'].text = name
         self.ids['password'].text = ""
 
+    def exit(self):
+        sys.exit(0)
+
 
 class LoginApp(App):
     username = StringProperty(None)
@@ -40,6 +46,7 @@ class LoginApp(App):
         manager = ScreenManager()
 
         manager.add_widget(Login(name='login'))
+        manager.add_widget(Menu(name='menu'))
         manager.add_widget(Pos(name='pos'))
 
         return manager

@@ -1,4 +1,4 @@
-#:include pos.kv
+#:include menu.kv
 
 <Login>:
     BoxLayout
@@ -39,8 +39,18 @@
                 password:True
                 font_size: 28
 
-        Button:
-            text: 'Login'
-            font_size: 24
+        GridLayout:
+            cols: 2
+            rows: 2
+            # padding: [10,50,10,50]
+            spacing: 50
 
-            on_press: root.click_login(login.text, password.text)
+            Button:
+                text: 'Login'
+                font_size: 24
+                on_press: root.click_login(login.text, password.text)
+
+            Button:
+                text: 'Exit'
+                font_size: 24
+                on_press: root.exit()

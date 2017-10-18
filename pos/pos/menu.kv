@@ -1,0 +1,55 @@
+#:include pos.kv
+
+<Menu>:
+    BoxLayout:
+        orientation: 'vertical'
+        id: 'menu_layout'
+        # spacing: 25
+
+        Label:
+            text: 'Menu'
+            font_size: 32
+            valign: 'top'
+
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: 25
+            padding: [10,20,10,20]
+
+            GridLayout:
+                cols: 2
+                rows:3
+                # padding: [10,10,10,10]
+                spacing: 5
+
+                BoxLayout:
+                    orientation: 'vertical'
+
+                    Button:
+                        text: 'Add Inventory'
+
+                BoxLayout:
+                    orientation: 'vertical'
+
+                    Button:
+                        text: 'Lookup Transaction'
+
+                BoxLayout:
+                    orientation: 'vertical'
+
+                    Button:
+                        text: 'POS'
+                        on_press: root.goto_pos()
+
+            GridLayout:
+                cols: 2
+                rows:3
+
+                Button:
+                    text: 'Logout'
+                    font_size: 24
+                    on_press: root.logout()
+
+                BoxLayout:
+                    orientation: 'vertical'
+
