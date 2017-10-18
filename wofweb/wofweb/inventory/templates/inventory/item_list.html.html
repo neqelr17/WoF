@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <h2>Items:</h2>
+    <ul>
+        {% for item in object_list %}
+            <li>SKU: {{ item.sku }}</li>
+            <li>UPC: {{ item.upc }}</li>
+            <li>Name: {{ item.name }}</li>
+            <li>Retail Price: {{ item.retail_price }}</li>
+            <li>Manufacturer: {{ item.manufacturer }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

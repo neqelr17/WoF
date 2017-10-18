@@ -1,0 +1,154 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <Name>wofweb</Name>
+    <RootNamespace>wofweb</RootNamespace>
+    <InterpreterId>MSBuild|env|$(MSBuildProjectFullPath)</InterpreterId>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>1bf1a4cc-7120-488c-968b-d835dca2355d</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <ProjectTypeGuids>{5F0BE9CA-D677-4A4D-8806-6076C0FAAD37};{349c5851-65df-11da-9384-00065b846f21};{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <StartupFile>manage.py</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <LaunchProvider>Django launcher</LaunchProvider>
+    <DjangoSettingsModule>wofweb.settings</DjangoSettingsModule>
+    <WebBrowserUrl>http://localhost</WebBrowserUrl>
+    <OutputPath>.</OutputPath>
+    <SuppressCollectPythonCloudServiceFiles>true</SuppressCollectPythonCloudServiceFiles>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="home\admin.py" />
+    <Compile Include="home\apps.py" />
+    <Compile Include="home\migrations\__init__.py" />
+    <Compile Include="home\models.py" />
+    <Compile Include="home\tests.py" />
+    <Compile Include="home\urls.py" />
+    <Compile Include="home\views.py" />
+    <Compile Include="home\__init__.py" />
+    <Compile Include="inventory\admin.py" />
+    <Compile Include="inventory\apps.py" />
+    <Compile Include="inventory\migrations\__init__.py" />
+    <Compile Include="inventory\models.py" />
+    <Compile Include="inventory\tests.py" />
+    <Compile Include="inventory\urls.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="inventory\views.py" />
+    <Compile Include="inventory\__init__.py" />
+    <Compile Include="manage.py" />
+    <Compile Include="pos\admin.py" />
+    <Compile Include="pos\apps.py" />
+    <Compile Include="pos\migrations\__init__.py" />
+    <Compile Include="pos\models.py" />
+    <Compile Include="pos\tests.py" />
+    <Compile Include="pos\views.py" />
+    <Compile Include="pos\__init__.py" />
+    <Compile Include="wofweb\home\admin.py" />
+    <Compile Include="wofweb\home\apps.py" />
+    <Compile Include="wofweb\home\migrations\__init__.py" />
+    <Compile Include="wofweb\home\models.py" />
+    <Compile Include="wofweb\home\tests.py" />
+    <Compile Include="wofweb\home\views.py" />
+    <Compile Include="wofweb\home\__init__.py" />
+    <Compile Include="wofweb\local_settings.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="wofweb\__init__.py" />
+    <Compile Include="wofweb\settings.py" />
+    <Compile Include="wofweb\urls.py" />
+    <Compile Include="wofweb\wsgi.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="home\templates\home\index.html" />
+    <Content Include="inventory\templates\inventory\index.html" />
+    <Content Include="inventory\templates\inventory\item_list.html.html" />
+    <Content Include="pos\templates\index.html" />
+    <Content Include="requirements.txt" />
+    <Content Include="wofweb\home\templates\home\index.html" />
+    <Content Include="wofweb\templates\base.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="home\" />
+    <Folder Include="home\migrations\" />
+    <Folder Include="home\templates\" />
+    <Folder Include="home\templates\home\" />
+    <Folder Include="inventory\" />
+    <Folder Include="inventory\migrations\" />
+    <Folder Include="inventory\templates\" />
+    <Folder Include="inventory\templates\inventory\" />
+    <Folder Include="pos\" />
+    <Folder Include="pos\migrations\" />
+    <Folder Include="pos\templates\" />
+    <Folder Include="wofweb\" />
+    <Folder Include="home\" />
+    <Folder Include="wofweb\home\" />
+    <Folder Include="wofweb\home\migrations\" />
+    <Folder Include="wofweb\home\templates\" />
+    <Folder Include="wofweb\home\templates\home\" />
+    <Folder Include="wofweb\templates\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Interpreter Include="env\">
+      <Id>env</Id>
+      <Version>3.6</Version>
+      <Description>env (Python 3.6 (64-bit))</Description>
+      <InterpreterPath>Scripts\python.exe</InterpreterPath>
+      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
+      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
+      <Architecture>X64</Architecture>
+    </Interpreter>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.Django.targets" />
+  <!-- Specify pre- and post-build commands in the BeforeBuild and 
+       AfterBuild targets below. -->
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <AutoAssignPort>True</AutoAssignPort>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
