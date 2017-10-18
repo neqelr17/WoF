@@ -27,8 +27,8 @@ class Customer(models.Model):
 class Transaction(models.Model):
     """Sales transaction."""
 
-    customer_id = models.ForeignKey(Customer, related_name='transactions')
-    tran_id = models.CharField(max_length=10)
+    customer = models.ForeignKey(Customer, related_name='transactions')
+    transaction_code = models.CharField(max_length=10)
     time = models.DateTimeField()
     payment_method = models.CharField(max_length=10)
     tax_rate = models.DecimalField(decimal_places=2, max_digits=6)
