@@ -1,6 +1,7 @@
 import sys
 
 
+from kivy import require
 from kivy.app import App
 from kivy.properties import StringProperty
 from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
@@ -13,12 +14,15 @@ from menu import Menu
 from pos import Pos
 
 
+require('1.10.0')
+
+
 class Login(Screen):
-    def click_login(self, loginText, passwordText):
+    def click_login(self, username, password):
         app = App.get_running_app()
 
-        app.username = loginText
-        app.password = passwordText
+        app.username = username
+        app.password = password
 
         self.manager.transition = SlideTransition(direction="left")
         self.manager.current = 'menu'
@@ -31,7 +35,7 @@ class Login(Screen):
         with session_scope() as session:
             customer = session.query(models.Customer).first()
             name = '{} {}'.format(customer.first_name, customer.last_name)
-        self.ids['login'].text = name
+        self.ids['username'].text = name
         self.ids['password'].text = ""
 
     def exit(self):

@@ -15,15 +15,17 @@
             orientation: 'vertical'
 
             Label:
-                text: 'Login:'
+                text: 'User Name:'
                 font_size: 18
                 halign: 'left'
                 text_size: root.width-20, 20
 
             TextInput:
-                id: login
+                id: username
                 multiline:False
                 font_size: 28
+                focus: True
+                write_tab: False
 
         BoxLayout:
             orientation: 'vertical'
@@ -36,6 +38,7 @@
             TextInput:
                 id: password
                 multiline:False
+                write_tab: False
                 password:True
                 font_size: 28
 
@@ -48,7 +51,7 @@
             Button:
                 text: 'Login'
                 font_size: 24
-                on_press: root.click_login(login.text, password.text)
+                on_press: root.click_login(username.text, password.text)
 
             Button:
                 text: 'Exit'

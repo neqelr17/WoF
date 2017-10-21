@@ -3,7 +3,7 @@ from .models import Customer, Transaction, TransactionItem
 
 
 class TransactionAdmin(admin.ModelAdmin):
-    list_display = ('transaction_code', 'time', 'payment_method', 'tax_rate', 'subtotal', 'tax_amount', 'total')
+    list_display = ('transaction_code', 'time', 'payment_method', 'tax_rate', 'subtotal', 'tax_amount', 'total', 'customer')
 
     class Meta:
         model = Transaction

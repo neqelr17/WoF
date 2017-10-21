@@ -28,7 +28,7 @@ class Transaction(models.Model):
     """Sales transaction."""
 
     customer = models.ForeignKey(Customer, related_name='transactions')
-    transaction_code = models.CharField(max_length=10)
+    transaction_code = models.CharField(max_length=40, unique=True)
     time = models.DateTimeField()
     payment_method = models.CharField(max_length=10)
     tax_rate = models.DecimalField(decimal_places=2, max_digits=6)
@@ -37,7 +37,7 @@ class Transaction(models.Model):
     total = models.DecimalField(decimal_places=2, max_digits=6)
 
     def __str__(self):
-        return self.tran_id
+        return self.transaction_code
 
     class Meta():
         managed = True
