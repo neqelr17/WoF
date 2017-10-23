@@ -6,7 +6,7 @@ class Item(models.Model):
     """An Item describes characteristics of an item."""
 
     sku = models.CharField(max_length=8, unique=True)
-    upc = models.BigIntegerField(unique=True)
+    upc = models.BigIntegerField(unique=True, null=True, blank=True)
     name = models.CharField(max_length=50)
     retail_price = models.DecimalField(decimal_places=2, max_digits=6)
     manufacturer = models.CharField(max_length=50)
@@ -29,8 +29,7 @@ class WholesaleItem(models.Model):
     price = models.DecimalField(decimal_places=2, max_digits=6)
     quantity = models.IntegerField()
     acqusition_date = models.DateTimeField()
-    # TODO:
-    # roosters = models.BoolFeild()
+    roosters = models.BooleanField()
 
     def __str__(self):
         return self.item.name
