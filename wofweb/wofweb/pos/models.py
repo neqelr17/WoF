@@ -17,6 +17,9 @@ class Employee(models.Model):
     salt = models.CharField(max_length=20)
     password = models.CharField(max_length=128)
 
+    def __str__(self):
+        return self.user_name
+
     class Meta():
         managed = True
         db_table = 'employees'
@@ -71,8 +74,6 @@ class TransactionItem(models.Model):
 
     item = models.ForeignKey(inventory_models.Item, related_name='transactions')
     transaction = models.ForeignKey(Transaction, related_name='items')
-    returned = models.BooleanField(default=False)
-    returned_timestamp = models.DateTimeField()
 
     def __str__(self):
         return self.item.name
@@ -82,3 +83,19 @@ class TransactionItem(models.Model):
         db_table = 'transaction_items'
         app_label = 'pos'
         # ordering = ['name']
+
+
+class ReturnItem(models.Model):
+    """Represents an item that has been returned."""
+
+    tran_item = models.ForeignKey(TransactionItem, related_name='return_items')
+    returned_timestamp = models.DateTimeField()
+    condition = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.tran_item.item.name
+
+    class Meta():
+        managed = True
+        db_table = 'return_items'
+        app_label = 'pos'
