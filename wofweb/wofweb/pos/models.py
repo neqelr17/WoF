@@ -1,7 +1,8 @@
 from django.db import models
+from django.core.validators import RegexValidator
+
 
 from inventory import models as inventory_models
-from django.core.validators import RegexValidator
 
 
 class Employee(models.Model):
@@ -10,9 +11,11 @@ class Employee(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     user_name = models.CharField(max_length=20)
-    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$',
-        message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
-    phone_number = models.CharField(validators=[phone_regex], max_length=15, blank=False, unique=True)
+    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message=(
+        'Phone number must be entered in the format: '
+        '"+999999999". Up to 15 digits allowed.'))
+    phone_number = models.CharField(
+        validators=[phone_regex], max_length=15, blank=False, unique=True)
     email_address = models.EmailField()
     salt = models.CharField(max_length=20)
     password = models.CharField(max_length=128)
@@ -32,9 +35,11 @@ class Customer(models.Model):
 
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$',
-        message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
-    phone_number = models.CharField(validators=[phone_regex], max_length=15, blank=False, unique=True)
+    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message=(
+        'Phone number must be entered in the format: ',
+        '"+999999999". Up to 15 digits allowed.'))
+    phone_number = models.CharField(
+        validators=[phone_regex], max_length=15, blank=False, unique=True)
     email_address = models.EmailField(null=True, blank=True)
 
     def __str__(self):
@@ -50,6 +55,8 @@ class Customer(models.Model):
 class Transaction(models.Model):
     """Sales transaction."""
 
+    employee = models.ForeignKey(
+        Employee, related_name='employee_transactions')
     customer = models.ForeignKey(Customer, related_name='transactions')
     transaction_code = models.CharField(max_length=40, unique=True)
     time = models.DateTimeField()
@@ -72,7 +79,8 @@ class Transaction(models.Model):
 class TransactionItem(models.Model):
     """Items sold in an transaction."""
 
-    item = models.ForeignKey(inventory_models.Item, related_name='transactions')
+    item = models.ForeignKey(
+        inventory_models.Item, related_name='transactions')
     transaction = models.ForeignKey(Transaction, related_name='items')
 
     def __str__(self):
@@ -85,11 +93,28 @@ class TransactionItem(models.Model):
         # ordering = ['name']
 
 
+class Return(models.Model):
+    """A base return."""
+
+    employee = models.ForeignKey(Employee, related_name='employee_returns')
+    transaction = models.ForeignKey(Transaction, related_name='returns')
+    returned_timestamp = models.DateTimeField()
+
+    def __str__(self):
+        return '{} {} {}'.format(
+            self.employee, self.transaction, self.returned_timestamp)
+
+    class Meta():
+        managed = True
+        db_table = 'returns'
+        app_label = 'pos'
+
+
 class ReturnItem(models.Model):
     """Represents an item that has been returned."""
 
-    tran_item = models.ForeignKey(TransactionItem, related_name='return_items')
-    returned_timestamp = models.DateTimeField()
+    return_transaction = models.ForeignKey(Return, related_name='return_items')
+    tran_item = models.ForeignKey(TransactionItem, related_name='returns')
     condition = models.CharField(max_length=50)
 
     def __str__(self):
