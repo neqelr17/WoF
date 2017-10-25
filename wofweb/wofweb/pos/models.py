@@ -41,6 +41,7 @@ class Customer(models.Model):
     phone_number = models.CharField(
         validators=[phone_regex], max_length=15, blank=False, unique=True)
     email_address = models.EmailField(null=True, blank=True)
+    store_credit = models.DecimalField(decimal_places=2, max_digits=6)
 
     def __str__(self):
         return self.first_name + ' ' + self.last_name
