@@ -19,6 +19,7 @@ class Employee(models.Model):
     email_address = models.EmailField()
     salt = models.CharField(max_length=20)
     password = models.CharField(max_length=128)
+    is_admin = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user_name
