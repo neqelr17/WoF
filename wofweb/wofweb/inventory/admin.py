@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import (Category,
                      Item,
                      ItemCategory,
+                     Manufacturer,
                      WholesaleItem)
 
 
@@ -10,6 +11,13 @@ class CategoryAdmin(admin.ModelAdmin):
 
     class Meta:
         model = Category
+
+
+class ManufacturerAdmin(admin.ModelAdmin):
+    list_display = ('name', 'prefix', 'sequence')
+
+    class Meta:
+        model = Manufacturer
 
 
 class ItemAdmin(admin.ModelAdmin):
@@ -33,6 +41,7 @@ class ItemCategoryAdmin(admin.ModelAdmin):
         model = ItemCategory
 
 
+admin.site.register(Manufacturer, ManufacturerAdmin)
 admin.site.register(Item, ItemAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(ItemCategory, ItemCategoryAdmin)

@@ -2,6 +2,23 @@
 from django.db import models
 
 
+class Manufacturer(models.Model):
+    """Contains a sequence and a prefix used to create new skus."""
+
+    name = models.CharField(max_length=50)
+    prefix = models.CharField(max_length=10)
+    sequence = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.name
+
+    class Meta():
+        managed = True
+        db_table = 'manufacturers'
+        app_label = 'inventory'
+        ordering = ['name']
+
+
 class Item(models.Model):
     """An Item describes characteristics of an item."""
 
@@ -9,7 +26,7 @@ class Item(models.Model):
     upc = models.BigIntegerField(unique=True, null=True, blank=True)
     name = models.CharField(max_length=50)
     retail_price = models.DecimalField(decimal_places=2, max_digits=6)
-    manufacturer = models.CharField(max_length=50)
+    manufacturer = models.ForeignKey(Manufacturer, related_name='items')
     quantity = models.IntegerField(default=0)
 
     def __str__(self):
